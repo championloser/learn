@@ -1,3 +1,10 @@
+/**********************************************************
+ > Filename     : string.cpp
+ > Author       : Jeyshon
+ > Email        : Jeyshon@qq.com
+ > Create time  : 2017-10-15 21:49:12
+ > Last modified: 2017-10-15 21:49:12
+**********************************************************/
 #include<iostream>
 #include<stdio.h>
 #include<string>

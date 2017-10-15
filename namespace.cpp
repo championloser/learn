@@ -1,3 +1,10 @@
+/**********************************************************
+ > Filename     : namespace.cpp
+ > Author       : Jeyshon
+ > Email        : Jeyshon@qq.com
+ > Create time  : 2017-10-15 21:48:47
+ > Last modified: 2017-10-15 21:48:47
+**********************************************************/
 #include<iostream>
 using namespace std;
 int num=1000;

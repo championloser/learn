@@ -1,3 +1,10 @@
+/**********************************************************
+ > Filename     : point.cpp
+ > Author       : Jeyshon
+ > Email        : Jeyshon@qq.com
+ > Create time  : 2017-10-15 21:49:05
+ > Last modified: 2017-10-15 21:49:05
+**********************************************************/
 #include<iostream>
 using namespace std;
 class Point
