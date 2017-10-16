@@ -3,7 +3,7 @@
  > Author       : Jeyshon
  > Email        : jeyshon@qq.com
  > Create time  : 2017-10-16 09:31:44
- > Last modified: 2017-10-16 09:32:01
+ > Last modified: 2017-10-16 10:13:37
 **********************************************************/
 #include<iostream>
 using namespace std;
@@ -48,9 +48,9 @@ int main()
 {
 	Point poi(5,6);
 	poi.print();
-	Point poi1(poi);
+	Point poi1;
 	poi1.print();
-	Point poi2(Point(1,2));
-	poi2.print();
+	poi1=poi;
+	poi1.print();
 	return 0;
 }
