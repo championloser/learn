@@ -2,7 +2,7 @@
  > Filename     : stringclass.cpp
  > Author       : Jeyshon<jeyshon@qq.com>
  > Create time  : 2017-10-16 17:44:04
- > Last modified: 2017-10-16 17:44:04
+ > Last modified: 2017-10-16 18:10:48
 **********************************************************/
 #include<iostream>
 #include<string.h>
@@ -15,7 +15,7 @@ public:
 	String(const String &rhs);
 	String & operator=(const String &rhs);
 	void Print();
-	int len();
+	int length();
 	char* c_str();
 	~String();
 private:
@@ -53,7 +53,7 @@ void String::Print()
 {
 	cout<<_str<<endl;
 }
-int String::len()
+int String::length()
 {
 	return _len;
 }
@@ -82,6 +82,6 @@ int main()
 	str1="hello world";
 	str1.c_str()[0]='H';
 	str1.Print();
-	cout<<str1.len()<<endl;
+	cout<<str1.length()<<endl;
 	return 0;
 }
