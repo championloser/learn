@@ -28,11 +28,10 @@ endfunction
 function AddTitle()
 	call append(0,"/**********************************************************")
 	call append(1," > Filename     : ".expand("%:t"))
-	call append(2," > Author       : Jeyshon")
-	call append(3," > Email        : jeyshon@qq.com")
-	call append(4," > Create time  : ".strftime("%Y-%m-%d %H:%M:%S"))"
-	call append(5," > Last modified: ".strftime("%Y-%m-%d %H:%M:%S"))
-	call append(6,"**********************************************************/")
+	call append(2," > Author       : Jeyshon<jeyshon@qq.com>")
+	call append(3," > Create time  : ".strftime("%Y-%m-%d %H:%M:%S"))"
+	call append(4," > Last modified: ".strftime("%Y-%m-%d %H:%M:%S"))
+	call append(5,"**********************************************************/")
 	echohl WarningMsg | echo "Successful in adding the author information." | echohl None
 endfunction
 "========================================================================
