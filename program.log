@@ -1,0 +1,12 @@
+1508295500 ERROR sub1 : sub1 error
+1508295500 WARN sub1 : sub1 warn
+1508295500 ERROR sub1 : Streamed sub1 error
+1508295500 WARN sub1 : Streamed sub1 warn
+1508295547 ERROR sub1 : sub1 error
+1508295547 WARN sub1 : sub1 warn
+1508295547 ERROR sub1 : Streamed sub1 error
+1508295547 WARN sub1 : Streamed sub1 warn
+1508296001 ERROR sub1 : sub1 error
+1508296001 WARN sub1 : sub1 warn
+1508296001 ERROR sub1 : Streamed sub1 error
+1508296001 WARN sub1 : Streamed sub1 warn
