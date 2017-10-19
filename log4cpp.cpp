@@ -8,12 +8,12 @@ int main()
 {
 	OstreamAppender * osAppender=new OstreamAppender("osAppender",&cout);
 	osAppender->setLayout(new BasicLayout());
+
 	Category & root=Category::getRoot();
 	root.addAppender(osAppender);
 	root.setPriority(Priority::DEBUG);
 
-	root.error("This is an error message");
-	root.debug("This is a debug message");
+	root.error("This is a error message");
 	root.warn("This is a warn message");
 
 	Category::shutdown();

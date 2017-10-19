@@ -10,3 +10,7 @@
 1508296001 WARN sub1 : sub1 warn
 1508296001 ERROR sub1 : Streamed sub1 error
 1508296001 WARN sub1 : Streamed sub1 warn
+1508390587 ERROR sub1 : sub1 error
+1508390587 WARN sub1 : sub1 warn
+1508390587 ERROR sub1 : Streamed sub1 error
+1508390587 WARN sub1 : Streamed sub1 warn

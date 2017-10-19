@@ -11,14 +11,16 @@ class Singleton
 {
 public:
 	static Singleton * getInstance();
+	~Singleton()
+	{cout<<"~Singleton()"<<endl;}
 private:
-	Singleton(){}
+	Singleton(){cout<<"Singleton()"<<endl;}
 	static Singleton * pInstance;
 
 	class Recycle
 	{
 	public:
-		Recycle(){};
+		Recycle(){cout<<"Recycle()"<<endl;};
 		~Recycle()
 		{
 			cout<<"~Recycle()"<<endl;
