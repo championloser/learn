@@ -1,8 +1,8 @@
 /**********************************************************
   > Filename     : Mylog.cpp
-  > Author       : Jeyshon<jeyshon@qq.com>
-  > Create time  : 2017-10-19 19:50:13
-  > Last modified: 2017-10-19 19:53:27
+  > Author       : Jeysin<jeysin@qq.com>
+  > Create time  : 2017-10-20 00:18:00
+  > Last modified: 2017-10-20 00:18:00
  **********************************************************/
 #include<iostream>
 #include<log4cpp/OstreamAppender.hh>

@@ -11,9 +11,8 @@ class Singleton
 {
 public:
 	static Singleton * getInstance();
-	~Singleton()
-	{cout<<"~Singleton()"<<endl;}
 private:
+	~Singleton(){cout<<"~Singleton()"<<endl;}
 	Singleton(){cout<<"Singleton()"<<endl;}
 	static Singleton * pInstance;
 
@@ -27,7 +26,7 @@ private:
 			delete Singleton::pInstance;
 		}
 	};
-	static Recycle rec;
+	static Recycle rec;//必须要是static类型的变量
 };
 Singleton::Recycle Singleton::rec;//静态数据成员类外初始化,否则连Recycle的构造函数都不会执行
 Singleton * Singleton::pInstance=NULL;
