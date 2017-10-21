@@ -2,7 +2,7 @@
   > Filename     : Condition.cpp
   > Author       : Jeyshon<jeyshon@qq.com>
   > Create time  : 2017-10-19 20:35:57
-  > Last modified: 2017-10-19 20:36:03
+  > Last modified: 2017-10-20 14:45:55
  **********************************************************/
 #include<iostream>
 #include<pthread.h>
@@ -11,6 +11,7 @@ class Condition
 {
 public:
 	Condition();
+	~Condition();
 	void wait();
 	void notify();
 	void notifyAll();
@@ -22,6 +23,11 @@ Condition::Condition()
 {
 	pthread_mutex_init(&_mutex,NULL);
 	pthread_cond_init(&_cond,NULL);
+}
+Condition::~Condition()
+{
+	pthread_mutex_destroy(&_mutex);
+	pthread_cond_destroy(&_cond);
 }
 void Condition::wait()
 {
