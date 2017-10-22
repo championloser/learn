@@ -2,7 +2,7 @@
   > Filename     : Mylog.cpp
   > Author       : Jeysin<jeysin@qq.com>
   > Create time  : 2017-10-20 00:18:00
-  > Last modified: 2017-10-20 00:18:00
+  > Last modified: 2017-10-21 14:32:17
  **********************************************************/
 #include<iostream>
 #include<log4cpp/OstreamAppender.hh>
@@ -41,6 +41,7 @@ private:
 		{
 			delete _pMylog;
 			_pMylog=NULL;
+			Category::shutdown();
 		}
 	};
 	static Recycle rec;
