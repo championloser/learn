@@ -22,6 +22,8 @@ public:
 	friend bool operator<(const String &lhs, const String &rhs);
 	friend bool operator>=(const String &lhs, const String &rhs);
 	friend bool operator<=(const String &lhs, const String &rhs);
+	friend ostream & operator<<(ostream &out, const String &rhs);
+	friend istream & operator>>(istream &in, String &rhs);
 private:
 	char *_arr;
 	int _size;
@@ -150,12 +152,28 @@ bool operator<=(const String &lhs, const String &rhs)
 	if(ret<=0)return true;
 	else return false;
 }
+ostream & operator<<(ostream &out, const String &rhs)
+{
+	out<<rhs._arr;
+	return out;
+}
+istream & operator>>(istream &in, String &rhs)
+{
+	char buf[1024]={0};
+	in>>buf;
+	delete [] rhs._arr;
+	rhs._arr=new char[strlen(buf)+1]();
+	strcpy(rhs._arr,buf);
+	return in;
+}
 int main()
 {
 	String str1("hello world");
-	String str2("jiang");
-	String str3("jiaxian");
-	if(str1>=str2)cout<<"true"<<endl;
-	else cout<<"false"<<endl;
+	String str2="jiaxian";
+	String str3;
+	str3="jiang jiaxian";
+	cout<<str3<<endl;
+	cin>>str3;
+	cout<<str3<<endl;
 	return 0;
 }

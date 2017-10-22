@@ -1,0 +1,33 @@
+2017-10-22 15:22:07,064: [ERROR]: This is an error message
+2017-10-22 15:22:07,071: [WARN]: This is a warn message
+2017-10-22 15:22:07,073: [FATAL]: Mylog.cpp:main: This is a emerg message
+2017-10-22 15:22:07,073: [NOTICE]: Mylog.cpp:main:143: This is a notice message
+2017-10-22 15:23:12,445: [ERROR]: This is an error message
+2017-10-22 15:23:12,449: [WARN]: This is a warn message
+2017-10-22 15:23:12,450: [FATAL]: This is a emerg message
+2017-10-22 15:23:12,450: [NOTICE]: This is a notice message
+2017-10-22 15:25:17,563: [ERROR]: Mylog.cpp:main:139: This is an error message
+2017-10-22 15:25:31,660: [ERROR]: Mylog.cpp:main:139: This is an error message
+2017-10-22 15:25:33,477: [ERROR]: Mylog.cpp:main:139: This is an error message
+2017-10-22 15:25:36,076: [ERROR]: Mylog.cpp:main:139: This is an error message
+2017-10-22 15:27:52,958: [ERROR]: Mylog.cpp:main:140: This is an error message
+2017-10-22 15:27:52,963: [ERROR]: Mylog.cpp:main:141: This is an error message
+2017-10-22 15:35:46,091: [FATAL]: Mylog.cpp:main:148: This is an emerg message
+2017-10-22 15:35:46,097: [FATAL]: Mylog.cpp:main:149: This is a Fatal message
+2017-10-22 15:35:46,098: [ERROR]: Mylog.cpp:main:150: This is an error message
+2017-10-22 15:36:33,440: [FATAL]: Mylog.cpp:main:148: This is an emerg message
+2017-10-22 15:36:33,444: [FATAL]: Mylog.cpp:main:149: This is a Fatal message
+2017-10-22 15:36:33,445: [ERROR]: Mylog.cpp:main:150: This is an error message
+2017-10-22 15:38:34,457: [FATAL]: This is an emerg message
+2017-10-22 15:38:34,463: [FATAL]: Mylog.cpp:main:149: This is an emerg message
+2017-10-22 15:38:34,464: [FATAL]: Mylog.cpp:main:150: This is a Fatal message
+2017-10-22 15:38:34,464: [ERROR]: Mylog.cpp:main:151: This is an error message
+2017-10-22 15:43:46,855: [FATAL]: Mylog.cpp:main:148: This is an emerg message
+2017-10-22 15:43:46,862: [FATAL]: Mylog.cpp:main:149: This is a Fatal message
+2017-10-22 15:43:46,862: [ALERT]: Mylog.cpp:main:150: This is a Alert message
+2017-10-22 15:43:46,862: [CRIT]: Mylog.cpp:main:151: This is a Crit message
+2017-10-22 15:43:46,862: [ERROR]: Mylog.cpp:main:152: This is an error message
+2017-10-22 15:43:46,862: [WARN]: Mylog.cpp:main:153: This is a warn message
+2017-10-22 15:43:46,862: [NOTICE]: Mylog.cpp:main:154: This is a notice message
+2017-10-22 15:43:46,862: [INFO]: Mylog.cpp:main:155: This is a info message
+2017-10-22 15:43:46,862: [DEBUG]: Mylog.cpp:main:156: This is a debug message

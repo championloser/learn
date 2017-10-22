@@ -14,6 +14,15 @@
 #include<stdio.h>
 #define FILENAME "mylog.log"
 #define PRIORITY Priority::DEBUG
+#define LogEmerg(msg) Mylog::getInstance()->emerg(msg,__func__,__LINE__);
+#define LogFatal(msg) Mylog::getInstance()->fatal(msg,__func__,__LINE__);
+#define LogAlert(msg) Mylog::getInstance()->alert(msg,__func__,__LINE__);
+#define LogCrit(msg) Mylog::getInstance()->crit(msg,__func__,__LINE__);
+#define LogError(msg) Mylog::getInstance()->error(msg,__func__,__LINE__);
+#define LogWarn(msg) Mylog::getInstance()->warn(msg,__func__,__LINE__);
+#define LogNotice(msg) Mylog::getInstance()->notice(msg,__func__,__LINE__);
+#define LogInfo(msg) Mylog::getInstance()->info(msg,__func__,__LINE__);
+#define LogDebug(msg) Mylog::getInstance()->debug(msg,__func__,__LINE__);
 using namespace std;
 using namespace log4cpp;
 class Mylog
@@ -136,10 +145,14 @@ void Mylog::printInfo(int num,const char *msg,const char *funcname,int linenum)
 }
 int main()
 {
-	Mylog *mylog=Mylog::getInstance();
-	mylog->error("This is an error message");
-	mylog->warn("This is a warn message");
-	mylog->emerg("This is a emerg message",__func__);
-	mylog->notice("This is a notice message",__func__,__LINE__);
+	LogEmerg("This is an emerg message");
+	LogFatal("This is a Fatal message");
+	LogAlert("This is a Alert message");
+	LogCrit("This is a Crit message");
+	LogError("This is an error message");
+	LogWarn("This is a warn message");
+	LogNotice("This is a notice message");
+	LogInfo("This is a info message");
+	LogDebug("This is a debug message");
 	return 0;
 }

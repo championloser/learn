@@ -17,6 +17,7 @@ int main()
 	infoCategory.setPriority(Priority::DEBUG);
 	infoCategory.error("This is an error message");
 	infoCategory.warn("This is a warn message");
+	infoCategory.emerg("This is a emerg message");
 	Category::shutdown();
 	return 0;
 }
