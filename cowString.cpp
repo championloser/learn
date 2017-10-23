@@ -13,8 +13,6 @@ private:
 		: _parr(arr)
 		, _pos(pos)
 		{}
-		char **_parr;
-		int _pos;
 		Char & operator=(char rhs)
 		{
 			int len=strlen(*_parr);
@@ -26,11 +24,10 @@ private:
 			(*_parr)[_pos]=rhs;
 			return *this;
 		}
-		friend ostream & operator<<(ostream &out, const Char rhs)
-		{
-			out<<*(rhs._parr)[rhs._pos];
-			return out;
-		}
+		friend ostream & operator<<(ostream &out, const Char &rhs);
+	private:
+		char **_parr;
+		int _pos;
 	};
 public:
 	String();
@@ -46,6 +43,7 @@ public:
 	//char & operator[](int);
 	Char  operator[](int idx);
 	friend ostream & operator<<(ostream &out, const String &rhs);
+	friend ostream & operator<<(ostream &out, const Char &rhs);
 private:
 	void initRefCount()
 	{
@@ -119,6 +117,11 @@ String::Char String::operator[](int idx)
 ostream & operator<<(ostream &out, const String &rhs)
 {
 	out<<rhs._arr;
+	return out;
+}
+ostream & operator<<(ostream &out, const String::Char &rhs)
+{
+	out<<*(rhs._parr)[rhs._pos];
 	return out;
 }
 int main()
