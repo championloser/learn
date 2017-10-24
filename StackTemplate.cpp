@@ -2,14 +2,14 @@
 #include<iostream>
 using std::cout;
 using std::endl;
-template <typename T, int Ksize=10>
+template <typename T, int KSize=10>
 class Stack
 {
 public:
 	Stack()
-	: _sta(new T[Ksize]())
+	: _sta(new T[KSize]())
 	, _top(0)
-	, _size(Ksize)
+	, _size(0)
 	{}
 	~Stack()
 	{
@@ -19,6 +19,7 @@ public:
 	void pop();
 	T & top();
 	void display();
+	int size();
 	bool isEmpty();
 	bool isFull();
 private:
@@ -26,27 +27,29 @@ private:
 	int _top;
 	int _size;
 };
-template <typename T, int Ksize>
-void Stack<T,Ksize>::push(const T &elem)
+template <typename T, int KSize>
+void Stack<T,KSize>::push(const T &elem)
 {
 	if(!isFull())
 	{
 		_sta[_top]=elem;
 		++_top;
+		++_size;
 	}
 	else cout<<"Stack is already full"<<endl;
 }
-template <typename T, int Ksize>
-void Stack<T,Ksize>::pop()
+template <typename T, int KSize>
+void Stack<T,KSize>::pop()
 {
 	if(!isEmpty())
 	{
 		--_top;
+		--_size;
 	}	
 	else cout<<"Stack is already empty"<<endl;
 }
-template <typename T, int Ksize>
-T & Stack<T,Ksize>::top()
+template <typename T, int KSize>
+T & Stack<T,KSize>::top()
 {
 	if(!isEmpty())
 	{
@@ -54,22 +57,27 @@ T & Stack<T,Ksize>::top()
 	}
 	else return _sta[0];
 }
-template <typename T, int Ksize>
-void Stack<T,Ksize>::display()
+template <typename T, int KSize>
+void Stack<T,KSize>::display()
 {
 	for(int i=0; i<_top; i++)cout<<_sta[i]<<" ";
 	cout<<endl;
 }
-template <typename T, int Ksize>
-bool Stack<T,Ksize>::isEmpty()
+template <typename T, int KSize>
+int Stack<T,KSize>::size()
+{
+	return _size;
+}
+template <typename T, int KSize>
+bool Stack<T,KSize>::isEmpty()
 {
 	if(0==_top)return true;
 	else return false;
 }
-template <typename T, int Ksize>
-bool Stack<T,Ksize>::isFull()
+template <typename T, int KSize>
+bool Stack<T,KSize>::isFull()
 {
-	if(_top==_size)return true;
+	if(_top==KSize)return true;
 	else return false;	
 }
 class Point
@@ -100,14 +108,16 @@ int test0()
 	Stack<int,5> sta;
 	cout<<"if stack empty?"<<sta.isEmpty()<<endl;
 	for(int i=1; i<=6; i++)sta.push(i);
+	sta.top()=1;
 	sta.display();
 	cout<<"if stack empty?"<<sta.isEmpty()<<endl;
 	cout<<"if stack full?"<<sta.isFull()<<endl;
+	cout<<"The size of Stack is "<<sta.size()<<endl;
 	for(int i=1; i<=6; i++)sta.pop();
 	sta.display();
 	cout<<"if stack empty?"<<sta.isEmpty()<<endl;
 	cout<<"if stack full?"<<sta.isFull()<<endl;
-
+	cout<<"The size of Stack is "<<sta.size()<<endl;
 	return 0;
 }
 int test1()
@@ -126,7 +136,7 @@ int test1()
 }
 int main()
 {
-	//test0();
-	test1();
+	test0();
+	//test1();
 	return 0;
 }
