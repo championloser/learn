@@ -1,3 +1,9 @@
+/**********************************************************
+  > Filename     : WordStatistic2.cpp
+  > Author       : Jeysin<jeysin@qq.com>
+  > Create time  : 2017-10-25 21:21:00
+  > Last modified: 2017-10-25 21:21:00
+ **********************************************************/
 #include<iostream>
 #include<map>
 #include<fstream>
