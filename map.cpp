@@ -50,11 +50,24 @@ void test0()
 		make_pair(6, Point(3,4)),
 		make_pair(9, Point(-1,2))
 	};
-	map<int, Point>::const_iterator it;
-	for(it=mapIntStr.begin(); it!=mapIntStr.end(); ++it)
+	map<int, string> mapInt2{
+		make_pair(3, string("jiang")),
+		make_pair(4, string("jiaxian"))
+	};
+	//cout<<mapInt2[1]<<endl;
+	map<int, Point>::iterator mit;
+	mit=mapIntStr.find(2);
+	if(mit!=mapIntStr.end())
 	{
-		cout<<it->first<<"--->"<<it->second<<endl;
+		cout<<mit->second<<endl;
+	}else{
+		cout<<"not found"<<endl;
 	}
+	//map<int, Point>::const_iterator it;
+	//for(it=mapIntStr.begin(); it!=mapIntStr.end(); ++it)
+	//{
+	//	cout<<it->first<<"--->"<<it->second<<endl;
+	//}
 }
 void test1()
 {
