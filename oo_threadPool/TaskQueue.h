@@ -7,14 +7,17 @@
 
 namespace jjx
 {
+class Task;
 class TaskQueue
 {
-	typedef int ElemType;
+	typedef Task* ElemType;
 public:
 	TaskQueue(int size);
 	~TaskQueue();
 	void push(ElemType &elem);
 	ElemType pop();
+	int size();
+	void wakeup();
 private:
 	bool isFull();
 	bool isEmpty();
@@ -25,6 +28,7 @@ private:
 	Condition _notFullCond;
 	Condition _notEmptyCond;
 	std::queue<ElemType> _que;
+	bool _flag;
 };
 }//end of namespace jjx
 

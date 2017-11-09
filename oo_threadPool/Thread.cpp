@@ -7,7 +7,8 @@ Thread::Thread()
 {}
 Thread::~Thread()
 {
-	pthread_detach(_pthid);
+	if(_isRunning)pthread_detach(_pthid);
+	cout<<"~Thread()"<<endl;
 }
 void Thread::start()
 {
@@ -17,6 +18,7 @@ void Thread::start()
 void Thread::join()
 {
 	pthread_join(_pthid, NULL);
+	_isRunning=false;
 }
 void * Thread::pthreadFunc(void *p)
 {

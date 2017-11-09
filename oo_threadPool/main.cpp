@@ -1,23 +1,25 @@
-#include"Thread.h"
-#include"Producer.h"
-#include"Consumer.h"
-#include"TaskQueue.h"
+#include"ThreadPool.h"
+#include"MyTask.h"
+#include"Task.h"
+#include<unistd.h>
 #include<iostream>
-#include<memory>
 using std::cout;
 using std::endl;
-using jjx::TaskQueue;
-using jjx::Producer;
-using jjx::Consumer;
-using jjx::Thread;
+using jjx::ThreadPool;
+using jjx::MyTask;
+using jjx::Task;
 int main()
 {
-	std::shared_ptr<TaskQueue> ptq(new TaskQueue(10));
-	std::shared_ptr<Thread> pthPro(new Producer(ptq));
-	std::shared_ptr<Thread> pthCon(new Consumer(ptq));
-	pthPro->start();
-	pthCon->start();
-	pthPro->join();
-	pthCon->join();
+	ThreadPool thPool(4, 10);
+	thPool.start();
+	Task * ptask=new MyTask;
+	for(int i=0; i<20; ++i)
+	{
+		thPool.addTask(ptask);
+		cout<<"add a task : "<<i+1<<endl;
+	}
+	thPool.stop();
+	delete ptask;
+	cout<<"end"<<endl;
 	return 0;
 }

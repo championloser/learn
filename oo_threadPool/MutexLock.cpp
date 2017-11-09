@@ -1,5 +1,8 @@
 #include"MutexLock.h"
 
+#include<iostream>
+using std::cout;
+using std::endl;
 namespace jjx
 {
 MutexLock::MutexLock()
@@ -10,6 +13,7 @@ MutexLock::MutexLock()
 MutexLock::~MutexLock()
 {
 	pthread_mutex_destroy(&_mutex);
+	cout<<"~MutexLock()"<<endl;
 }
 void MutexLock::lock()
 {

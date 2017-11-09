@@ -1,6 +1,9 @@
 #include"MutexLock.h"
 #include"Condition.h"
 
+#include<iostream>
+using std::cout;
+using std::endl;
 namespace jjx
 {
 Condition::Condition(MutexLock &mutexlock)
@@ -11,6 +14,7 @@ Condition::Condition(MutexLock &mutexlock)
 Condition::~Condition()
 {
 	pthread_cond_destroy(&_cond);
+	cout<<"~Condition()"<<endl;
 }
 void Condition::wait()
 {
