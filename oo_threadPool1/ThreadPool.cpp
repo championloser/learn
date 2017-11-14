@@ -2,6 +2,9 @@
 #include"WordThread.h"
 #include"Task.h"
 #include<unistd.h>
+#include<iostream>
+using std::cout;
+using std::endl;
 
 namespace jjx
 {
@@ -14,7 +17,9 @@ ThreadPool::ThreadPool(int pthSize, int taskSize)
 	_vecPth.reserve(_pthNum);
 }
 ThreadPool::~ThreadPool()
-{}
+{
+	cout<<"~ThreadPool()"<<endl;
+}
 void ThreadPool::start()
 {
 	for(int idx=0; idx!=_pthNum; ++idx)
@@ -38,6 +43,7 @@ void ThreadPool::stop()
 	for(auto pelem : _vecPth)
 	{
 		pelem->join();
+		cout<<"join"<<endl;
 	}
 }
 void ThreadPool::addTask(Task *ptask)

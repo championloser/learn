@@ -8,6 +8,7 @@ Thread::Thread()
 Thread::~Thread()
 {
 	if(_isRunning)pthread_detach(_pthid);
+	cout<<"~Thread()"<<endl;
 }
 void Thread::start()
 {

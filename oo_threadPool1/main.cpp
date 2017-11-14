@@ -20,5 +20,6 @@ int main()
 	}
 	thPool.stop();
 	delete ptask;
+	cout<<"end"<<endl;
 	return 0;
 }

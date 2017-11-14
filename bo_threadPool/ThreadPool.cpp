@@ -1,7 +1,6 @@
 #include"ThreadPool.h"
-#include"WordThread.h"
-#include"Task.h"
 #include<unistd.h>
+#include"Thread.h"
 
 namespace jjx
 {
@@ -19,7 +18,7 @@ void ThreadPool::start()
 {
 	for(int idx=0; idx!=_pthNum; ++idx)
 	{
-		std::shared_ptr<Thread> pth(new WordThread(*this));
+		std::shared_ptr<Thread> pth(new Thread(*this));
 		_vecPth.push_back(pth);
 	}
 	for(auto pelem : _vecPth)
@@ -40,11 +39,11 @@ void ThreadPool::stop()
 		pelem->join();
 	}
 }
-void ThreadPool::addTask(Task *ptask)
+void ThreadPool::addTask(CallBack &&cb)
 {
-	_taskQue.push(ptask);
+	_taskQue.push(cb);
 }
-Task * ThreadPool::getTask()
+ThreadPool::CallBack ThreadPool::getTask()
 {
 	return _taskQue.pop();
 }
@@ -52,8 +51,8 @@ void ThreadPool::threadFun()
 {
 	while(!_isExit)
 	{
-		Task *ptask=getTask();
-		if(ptask)ptask->process();
+		CallBack tmp=getTask();
+		if(tmp)tmp();
 	}
 }
 }//end of namespace jjx
