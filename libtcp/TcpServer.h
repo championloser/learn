@@ -13,14 +13,14 @@ class TcpServer
 public:
 	TcpServer(const string &ip, int port);
 	~TcpServer();
+	void bind();
+	void listen();
 	TcpConnect accept();
 	void reuseAddr();
 	void reusePort();
+	int getSfd();
 private:
-	void bind();
-	void listen();
-private:
-	int _tcpfd;
+	int _sfd;
 	string _ip;
 	int _port;
 	bool _isReuseAddr;

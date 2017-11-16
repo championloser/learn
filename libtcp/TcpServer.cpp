@@ -12,39 +12,34 @@
 namespace jjx
 {
 TcpServer::TcpServer(const string &ip, int port)
-: _tcpfd(socket(AF_INET, SOCK_STREAM, 0))
+: _sfd(socket(AF_INET, SOCK_STREAM, 0))
 , _ip(ip)
 , _port(port)
 , _isReuseAddr(false)
 , _isReusePort(false)
-{
-	bind();
-	listen();
-}
+{}
 TcpServer::~TcpServer()
 {
-	::close(_tcpfd);
+	::close(_sfd);
 }
 TcpConnect TcpServer::accept()
 {
 	struct sockaddr_in peerAddr;
 	memset(&peerAddr, 0, sizeof(peerAddr));
 	int addrlen=sizeof(peerAddr);
-	int newfd=::accept(_tcpfd, (struct sockaddr*)&peerAddr, (unsigned int *)&addrlen);
-	string peerIp(inet_ntoa(peerAddr.sin_addr));
-	int peerPort=(int)ntohs(peerAddr.sin_port);
-	return TcpConnect(newfd, _ip, _port, peerIp, peerPort);
+	int newfd=::accept(_sfd, (struct sockaddr*)&peerAddr, (unsigned int *)&addrlen);
+	return TcpConnect(newfd, _ip, _port, inet_ntoa(peerAddr.sin_addr), ntohs(peerAddr.sin_port));
 }
 void TcpServer::reuseAddr()
 {
 	if(_isReuseAddr==false)
 	{
 		int reuse=1;
-		int ret=::setsockopt(_tcpfd, SOL_SOCKET, SO_REUSEADDR, (const void*)&reuse, sizeof(int));
+		int ret=::setsockopt(_sfd, SOL_SOCKET, SO_REUSEADDR, (const void*)&reuse, sizeof(int));
 		if(-1==ret)
 		{
 			perror("::setsockopt");
-			::close(_tcpfd);
+			::close(_sfd);
 			exit(EXIT_FAILURE);
 		}
 		_isReuseAddr=true;
@@ -55,11 +50,11 @@ void TcpServer::reusePort()
 	if(_isReusePort==false)
 	{
 		int reuse=1;
-		int ret=::setsockopt(_tcpfd, SOL_SOCKET, SO_REUSEPORT, (const void *)&reuse, sizeof(int));
+		int ret=::setsockopt(_sfd, SOL_SOCKET, SO_REUSEPORT, (const void *)&reuse, sizeof(int));
 		if(-1==ret)
 		{
 			perror("::setsockopt");
-			::close(_tcpfd);
+			::close(_sfd);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -73,22 +68,26 @@ void TcpServer::bind()
 	localAddr.sin_addr.s_addr=inet_addr(_ip.c_str());
 	localAddr.sin_port=htons(_port);
 
-	int ret=::bind(_tcpfd, (struct sockaddr*)&localAddr, sizeof(localAddr));
+	int ret=::bind(_sfd, (struct sockaddr*)&localAddr, sizeof(localAddr));
 	if(-1==ret)
 	{
 		perror("::bind");
-		::close(_tcpfd);
+		::close(_sfd);
 		exit(EXIT_FAILURE);
 	}
 }
 void TcpServer::listen()
 {
-	int ret=::listen(_tcpfd, MAXLINK);
+	int ret=::listen(_sfd, MAXLINK);
 	if(-1==ret)
 	{
 		perror("::listen");
-		::close(_tcpfd);
+		::close(_sfd);
 		exit(EXIT_FAILURE);
 	}
+}
+int TcpServer::getSfd()
+{
+	return _sfd;
 }
 }//end of namespace jjx

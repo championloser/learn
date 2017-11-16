@@ -1,5 +1,6 @@
 server.out:server.cpp
-	g++ *.cpp -o server.out
+	g++ TcpServer.cpp TcpConnect.cpp Epoll.cpp server.cpp -o server.out -std=c++11
+	g++ TcpClient.cpp client.cpp -o client.out -std=c++11
 .PYONE:clean
 clean:
-	rm server.out
+	rm server.out client.out
