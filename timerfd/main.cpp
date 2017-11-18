@@ -1,6 +1,7 @@
 #include"Timerfd.h"
 #include"Thread.h"
 #include<unistd.h>
+#include<poll.h>
 #include<iostream>
 #include<functional>
 using std::cout;
@@ -16,23 +17,30 @@ public:
 		Timerfd *ptim=(Timerfd*)p;
 		int tfd=ptim->getTfd();
 		long int buf;
+		struct pollfd fds;
+		fds.fd=tfd;
+		fds.events=POLLIN;
 		while(ptim->isStart())
 		{
-			::read(tfd, &buf, sizeof(buf));
-			cout<<"buf="<<buf<<endl;
-			sleep(1);
+			int ret=::poll(&fds, 1, 1000);
+			if(ret<0){perror("::poll");break;}
+			else if(ret==0)cout<<"poll timeout"<<endl;
+			else{
+				::read(tfd, &buf, sizeof(buf));
+				cout<<"buf= "<<buf<<endl;
+			}
 		}
 	}
 };
 int main()
 {
 	Task task;
-	Timerfd tim(2,1);
+	Timerfd tim(2,2);
 	Thread thr(bind(&Task::process, &task, (void *)&tim));
 	tim.start();
 	thr.createThread();
 	sleep(10);
-	tim.stop();//此处stop和read在多线程环境下存在时序问题，这里只是示范一下timerfd的用法
+	tim.stop();
 	thr.joinThread();
 	return 0;
 }
