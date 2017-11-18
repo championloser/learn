@@ -35,6 +35,15 @@ int Business(shared_ptr<Argument> pArg)
 	if(ret<=0)return -1;
 	return 0;
 }
+int DisConnect(shared_ptr<Argument> pArg)
+{
+	Reactor *pRec=(Reactor*)pArg->_p;
+	cout<<"Disconnect: ";
+	cout<<pRec->getLocalIp()<<":"<<pRec->getLocalPort()<<"--->"
+	    <<pArg->_pCon->getPeerIp()<<":"<<pArg->_pCon->getPeerPort()
+	    <<endl;
+	return 0;
+}
 int main(int argc, char *argv[])
 {
 	if(argc!=3){cout<<"error argc"<<endl; return -1;}
@@ -46,5 +55,7 @@ int main(int argc, char *argv[])
 	Reactor rea(acc);
 	rea.setBusiness(Business);
 	rea.setHandleNewCon(HandleNewCon);
+	rea.setDisConnect(DisConnect);
+	rea.loop();
 	return 0;
 }

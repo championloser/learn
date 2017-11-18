@@ -4,7 +4,9 @@
 #include<sys/types.h>
 #include<sys/socket.h>
 #include<string>
+#include<memory>
 using std::string;
+using std::shared_ptr;
 namespace jjx
 {
 class TcpConnect;
@@ -15,7 +17,7 @@ public:
 	~TcpServer();
 	void bind();
 	void listen();
-	TcpConnect accept();
+	shared_ptr<TcpConnect> accept();
 	void reuseAddr();
 	void reusePort();
 	int getSfd();

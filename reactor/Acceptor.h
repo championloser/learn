@@ -2,7 +2,9 @@
 #define __ACCEPTOR_H__
 
 #include<string>
+#include<memory>
 using std::string;
+using std::shared_ptr;
 
 namespace jjx
 {
@@ -12,7 +14,7 @@ class Acceptor
 {
 public:
 	Acceptor(Socket &socket);
-	Connection accept();
+	shared_ptr<Connection> accept();
 	int getSockFd();
 	const string & getLocalIp();
 	int getLocalPort();

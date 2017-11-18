@@ -34,8 +34,9 @@ public:
 	int unloop();
 	int addEpollinFd(int fd);
 	int delEpollinFd(int fd);
-	int setBusiness(CallbackType &&cb);
 	int setHandleNewCon(CallbackType &&cb);
+	int setBusiness(CallbackType &&cb);
+	int setDisConnect(CallbackType &&cb);
 	const string & getLocalIp();
 	int getLocalPort();
 private:
@@ -45,8 +46,9 @@ private:
 	int _sfd;
 	vector<struct epoll_event> _eventsList;
 	map<int, shared_ptr<Connection>> _lisenMap;
-	CallbackType _business;
 	CallbackType _handleNewCon;
+	CallbackType _business;
+	CallbackType _disConnect;
 };
 }//end of namespace jjx
 

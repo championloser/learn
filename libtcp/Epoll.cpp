@@ -2,6 +2,7 @@
 #include"TcpServer.h"
 #include"TcpConnect.h"
 #include<string.h>
+#include<unistd.h>
 #include<utility>
 #include<iostream>
 using std::cout;
@@ -23,7 +24,8 @@ int Epoll::addEpollIn(int fd)
 	memset(&event, 0, sizeof(event));
 	event.events=EPOLLIN;
 	event.data.fd=fd;
-	epoll_ctl(_epfd, EPOLL_CTL_ADD, fd, &event);
+	int ret=epoll_ctl(_epfd, EPOLL_CTL_ADD, fd, &event);
+	if(-1==ret){perror("::epoll_ctl");exit(EXIT_FAILURE);}
 	return 0;
 }
 int Epoll::delEpollIn(int fd)
@@ -58,7 +60,7 @@ int Epoll::loop()
 			{
 				if(_eventsList[i].events & EPOLLIN)
 				{
-					shared_ptr<TcpConnect> pTcpCon(new TcpConnect(_tcpSer.accept()));
+					shared_ptr<TcpConnect> pTcpCon=_tcpSer.accept();
 					int newfd=pTcpCon->getNewfd();
 					addEpollIn(newfd);//注册至epoll
 					_listenMap.insert(std::make_pair(newfd, pTcpCon));//记录一个新TcpConnect连接

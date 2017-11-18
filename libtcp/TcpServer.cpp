@@ -22,13 +22,15 @@ TcpServer::~TcpServer()
 {
 	::close(_sfd);
 }
-TcpConnect TcpServer::accept()
+shared_ptr<TcpConnect> TcpServer::accept()
 {
 	struct sockaddr_in peerAddr;
 	memset(&peerAddr, 0, sizeof(peerAddr));
 	int addrlen=sizeof(peerAddr);
 	int newfd=::accept(_sfd, (struct sockaddr*)&peerAddr, (unsigned int *)&addrlen);
-	return TcpConnect(newfd, _ip, _port, inet_ntoa(peerAddr.sin_addr), ntohs(peerAddr.sin_port));
+	shared_ptr<TcpConnect> pTcpCon(new TcpConnect(newfd, _ip, _port, inet_ntoa(peerAddr.sin_addr),
+			       ntohs(peerAddr.sin_port)));
+	return pTcpCon;
 }
 void TcpServer::reuseAddr()
 {

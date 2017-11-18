@@ -1,5 +1,6 @@
 #include"TcpConnect.h"
 #include<string.h>
+#include<unistd.h>
 
 namespace jjx
 {
@@ -10,6 +11,10 @@ TcpConnect::TcpConnect(int newfd, const string &localIp, int localPort, const st
 , _peerIp(peerIp)
 , _peerPort(peerPort)
 {}
+TcpConnect::~TcpConnect()
+{
+	::close(_newfd);
+}
 int TcpConnect::send(const char *buf, int length)
 {
 	return ::send(_newfd, buf, length, 0);

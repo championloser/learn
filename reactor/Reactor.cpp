@@ -48,11 +48,9 @@ int Reactor::loop()
 		{
 			if(_eventsList[i].data.fd==_sfd)//如果有新连接请求
 			{
-				shared_ptr<Connection> pCon(new Connection(_acceptor.accept()));
+				shared_ptr<Connection> pCon=_acceptor.accept();
 				_lisenMap.insert(std::make_pair(pCon->getNewFd(), pCon));//添加新Connection
-				int fd=pCon->getNewFd();
-				cout<<"fd="<<fd<<endl;
-				addEpollinFd(fd);//将新的newfd注册至_epfd;
+				addEpollinFd(pCon->getNewFd());//将新的newfd注册至_epfd;
 				shared_ptr<Argument> pArg(new Argument);//填参数
 				pArg->_p=this;
 				pArg->_pCon=pCon;
@@ -73,6 +71,10 @@ int Reactor::loop()
 					if(ret<0)//如果对端关闭或连接断开，从epoll解注册，并从_listenMap中移除newfd
 					{
 						delEpollinFd(fd);
+						shared_ptr<Argument> pArg(new Argument);
+						pArg->_p=this;
+						pArg->_pCon=it->second;
+						_disConnect(pArg);
 						_lisenMap.erase(it);
 					}
 				}
@@ -114,6 +116,11 @@ int Reactor::setBusiness(CallbackType &&cb)
 int Reactor::setHandleNewCon(CallbackType &&cb)
 {
 	_handleNewCon=cb;
+	return 0;
+}
+int Reactor::setDisConnect(CallbackType &&cb)
+{
+	_disConnect=cb;
 	return 0;
 }
 const string & Reactor::getLocalIp()

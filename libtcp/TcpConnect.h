@@ -12,6 +12,7 @@ class TcpConnect
 {
 public:
 	TcpConnect(int newfd, const string &localIp, int localPort, const string &peerIp, int peerPort);
+	~TcpConnect();
 	int send(const char *buf, int length);
 	int recv(char *buf, int length);
 	//int send(const string &msg, int length);
