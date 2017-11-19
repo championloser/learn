@@ -10,15 +10,17 @@ using std::endl;
 
 namespace jjx
 {
-Reactor::Reactor(Acceptor &acceptor)
+Reactor::Reactor(Acceptor &acceptor, int etfd)
 : _isLooping(false)
 , _acceptor(acceptor)
+, _sfd(_acceptor.getSockFd())
+, _etfd(etfd)
 , _eventsList(10)
 {
-	_sfd=_acceptor.getSockFd();
 	_epfd=::epoll_create(1);
 	if(-1==_epfd){perror("::epoll_create");exit(EXIT_FAILURE);}
 	addEpollinFd(_sfd);
+	addEpollinFd(_etfd);//注册eventfd
 }
 Reactor::~Reactor()
 {
@@ -51,10 +53,11 @@ int Reactor::loop()
 				shared_ptr<Connection> pCon=_acceptor.accept();
 				_lisenMap.insert(std::make_pair(pCon->getNewFd(), pCon));//添加新Connection
 				addEpollinFd(pCon->getNewFd());//将新的newfd注册至_epfd;
-				shared_ptr<Argument> pArg(new Argument);//填参数
-				pArg->_p=this;
-				pArg->_pCon=pCon;
-				_handleNewCon(pArg);//执行处理新连接的回调函数
+				_handleNewCon(pCon);//执行处理新连接的回调函数
+			}
+			else if(_eventsList[i].data.fd==_etfd)//如果是计算线程发来的信号
+			{
+				_businessSendData();//执行发送数据的业务逻辑函数
 			}else{
 				if(_eventsList[i].events & EPOLLIN)//如果是有业务请求
 				{
@@ -63,18 +66,12 @@ int Reactor::loop()
 					int ret=0;
 					if(it!=_lisenMap.end())
 					{
-						shared_ptr<Argument> pArg(new Argument);
-						pArg->_p=this;
-						pArg->_pCon=it->second;
-						ret=_business(pArg);//执行业务逻辑处理函数
+						ret=_businessRecvData(it->second);//执行接收数据的业务逻辑函数
 					}
 					if(ret<0)//如果对端关闭或连接断开，从epoll解注册，并从_listenMap中移除newfd
 					{
 						delEpollinFd(fd);
-						shared_ptr<Argument> pArg(new Argument);
-						pArg->_p=this;
-						pArg->_pCon=it->second;
-						_disConnect(pArg);
+						_disConnect(it->second);
 						_lisenMap.erase(it);
 					}
 				}
@@ -108,17 +105,22 @@ int Reactor::delEpollinFd(int fd)
 	if(-1==ret){perror("::epoll_ctl");exit(EXIT_FAILURE);}
 	return ret;
 }
-int Reactor::setBusiness(CallbackType &&cb)
+int Reactor::setBusinessRecvData(CallbackType &cb)
 {
-	_business=cb;
+	_businessRecvData=cb;
 	return 0;
 }
-int Reactor::setHandleNewCon(CallbackType &&cb)
+int Reactor::setBusinessSendData(function<int(void)> &cb)
+{
+	_businessSendData=cb;
+	return 0;
+}
+int Reactor::setHandleNewCon(CallbackType &cb)
 {
 	_handleNewCon=cb;
 	return 0;
 }
-int Reactor::setDisConnect(CallbackType &&cb)
+int Reactor::setDisConnect(CallbackType &cb)
 {
 	_disConnect=cb;
 	return 0;

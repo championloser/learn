@@ -18,25 +18,20 @@ class Acceptor;
 class Connection;
 class Reactor;
 
-typedef struct argument
-{
-	void *_p;
-	shared_ptr<Connection> _pCon;
-}Argument;
-
 class Reactor
 {
-typedef function<int(shared_ptr<Argument>)> CallbackType;
+typedef function<int(shared_ptr<Connection>)> CallbackType;
 public:
-	Reactor(Acceptor &acceptor);
+	Reactor(Acceptor &acceptor, int etfd);
 	~Reactor();
 	int loop();
 	int unloop();
 	int addEpollinFd(int fd);
 	int delEpollinFd(int fd);
-	int setHandleNewCon(CallbackType &&cb);
-	int setBusiness(CallbackType &&cb);
-	int setDisConnect(CallbackType &&cb);
+	int setHandleNewCon(CallbackType &cb);
+	int setBusinessRecvData(CallbackType &cb);
+	int setBusinessSendData(function<int(void)> &cb);
+	int setDisConnect(CallbackType &cb);
 	const string & getLocalIp();
 	int getLocalPort();
 private:
@@ -44,10 +39,12 @@ private:
 	int _epfd;
 	Acceptor &_acceptor;
 	int _sfd;
+	int _etfd;//eventfd
 	vector<struct epoll_event> _eventsList;
 	map<int, shared_ptr<Connection>> _lisenMap;
 	CallbackType _handleNewCon;
-	CallbackType _business;
+	CallbackType _businessRecvData;
+	function<int(void)> _businessSendData;
 	CallbackType _disConnect;
 };
 }//end of namespace jjx
